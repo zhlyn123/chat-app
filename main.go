@@ -3,6 +3,7 @@ package main
 import (
 	"chat-app/config"
 	"chat-app/router"
+	"chat-app/model"
 )
 
 func main() {
@@ -10,7 +11,7 @@ func main() {
 	config.InitDB()
 
 	//自动迁移数据库
-	// config.DB.AutoMigrate(&models.User{})
+	config.DB.AutoMigrate(&model.User{})
 
 	r := router.InitRouter()
 
