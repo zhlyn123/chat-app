@@ -2,6 +2,7 @@ package router
 
 import(
 	"github.com/gin-gonic/gin"
+	"chat-app/controller"
 )
 
 func InitRouter() *gin.Engine{
@@ -12,6 +13,7 @@ func InitRouter() *gin.Engine{
 			"message": "Hello, world!",
 		})
 	})
-	
+	r.POST("/Register", controller.Register)
+	r.POST("/Login", controller.Login)
 	return r
 }
