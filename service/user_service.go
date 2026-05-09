@@ -23,6 +23,7 @@ func Register(username, password string) error {
 	if err != nil {
 		return err
 	}
+
 	//保存用户
 	newUser := model.User{
 		Username: username,
@@ -49,7 +50,8 @@ func Login(username, password string) (string, error) {
 		return "", errors.New("密码错误")
 	}
 	//生成jwt
-	token := jwt.NewWithClaims(jwt.SigningMethodES256, jwt.MapClaims{
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"user_id": user.ID,
 		"username": user.Username,
 		"exp": time.Now().Add(config.TokenExpireTime).Unix(),
 	})
@@ -59,4 +61,16 @@ func Login(username, password string) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
+}
+
+//返回用户信息
+func GetUserInfo(userID uint) (*model.User, error) {
+	var user model.User
+	if err := config.DB.First(&user, userID).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound){
+			return nil, errors.New("用户不存在")
+		}
+		return nil, err
+	}
+	return &user, nil
 }
