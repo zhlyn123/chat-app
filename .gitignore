@@ -1,0 +1,6 @@
+.env
+.env.*
+!.env.example
+
+.gocache/
+__debug_bin.exe

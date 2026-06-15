@@ -1,0 +1,6 @@
+.git
+.gocache
+.trae
+logs
+__debug_bin.exe
+.env
